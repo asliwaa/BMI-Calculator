@@ -11,7 +11,8 @@ class BMICalculatorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text("BMIiii Calculator"),
+        appBar: AppBar(title: Text("BMI Calculator"),
+        backgroundColor: Colors.deepPurple.shade200,
         ),
         body: BMICalculator(),
       ),
@@ -25,64 +26,79 @@ class BMICalculator extends StatefulWidget {
   _ComputeBMI createState() => _ComputeBMI();
 }
 
-class _ComputeBMI extends State{
+class _ComputeBMI extends State<BMICalculator>{
   String _selectedGender = "M";
 
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width - 50;
+
     return Container(
       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 20.0),
       child: Column(
         children: [
-          Row (
-            children: [
-              const Icon(Icons.wc, color: Colors.deepPurple),
-              const SizedBox(width: 15),
-              const Text("Gender: "),
-              const SizedBox(width: 20),
-              
-              DropdownButton<String>(
-                isExpanded: true,
-                items: const [
-                  DropdownMenuItem(value: "M", child: Center(child: Text("Male"))),
-                  DropdownMenuItem(value: "F", child: Center(child: Text("Female"))),
-                ],
-                value: _selectedGender,
-                onChanged: (val) => setState(() => _selectedGender = val!),
+          DropdownMenu<String>(
+              width: width,
+              initialSelection: _selectedGender,
+              label: const Text("Gender"),
+              leadingIcon: const Icon(Icons.wc, color: Colors.deepPurple),
+              inputDecorationTheme: const InputDecorationTheme(
+                border: OutlineInputBorder(), 
+                filled: false,
               ),
-            ],
-          ),
+              dropdownMenuEntries: const [
+                DropdownMenuEntry(value: "M", label: "Male"),
+                DropdownMenuEntry(value: "F", label: "Female"),
+              ],
+              onSelected: (String? value) {
+                setState(() {
+                  _selectedGender = value!;
+                });
+              },
+            ),
+          const SizedBox(height: 10.0),
+
           TextField(
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               hintText: "Input your age",
               labelText: "Age",
-              prefixIcon: Icon(Icons.person, color: Colors.deepPurple,)
+              suffixText: "(years)",
+              prefixIcon: Icon(Icons.person, color: Colors.deepPurple,),
+              border: OutlineInputBorder(),
             )
           ),
+          const SizedBox(height: 10.0),
+
           TextField(
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               hintText: "Input your height",
               labelText: "Height",
               suffixText: "(cm)",
-              prefixIcon: Icon(Icons.height, color: Colors.deepPurple,)
+              prefixIcon: Icon(Icons.height, color: Colors.deepPurple,),
+              border: OutlineInputBorder(),
             )
           ),
+          const SizedBox(height: 10.0),
+
           TextField(
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               hintText: "Input your weight",
               labelText: "Weight",
               suffixText: "(kg)",
-              prefixIcon: Icon(Icons.scale, color: Colors.deepPurple,)
+              prefixIcon: Icon(Icons.scale, color: Colors.deepPurple,),
+              border: OutlineInputBorder(),
             )
           ),
+          const SizedBox(height: 10.0),
+
           ElevatedButton(
             onPressed: (){}, 
             child: Text("Calculate")
             ),
-            Text("")
         ],
       )
     );
