@@ -41,6 +41,8 @@ class _ComputeBMI extends State<BMICalculator>{
   Color _resultColor = Colors.deepPurpleAccent;
 
   void _calculateBMI() {
+    FocusScope.of(context).unfocus();
+    
     String ageText = _ageController.text;
     String heightText = _heightController.text;
     String weightText = _weightController.text;
